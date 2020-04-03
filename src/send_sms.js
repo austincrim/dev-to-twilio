@@ -11,5 +11,5 @@ export default (body, toNumber) => {
       from: "+12029528194",
       to: toNumber
     })
-    .then((message) => console.log(message.sid));
+    .then(message => console.log(message.sid));
 };
