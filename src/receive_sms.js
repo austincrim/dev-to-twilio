@@ -8,7 +8,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.post("/sms", (req, res) => {
     const twiml = new MessagingResponse();
 
-    console.log(req.body);
     twiml.message(`Hello, ${req.body.Body}!`);
 
     res.writeHead(200, { "Content-Type": "text/xml" });
