@@ -6,6 +6,7 @@ const recipeClient = require('./recipeClient');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
+const PORT = process.env.PORT || 1337;
 
 app.post("/sms", async (req, res) => {
     const ingredients = req.body.Body;
@@ -26,6 +27,6 @@ app.post("/sms", async (req, res) => {
     res.end(twiml.toString());
 });
 
-app.listen(1337, () => {
-    console.log("Express server listening on port 1337");
+app.listen(PORT, () => {
+    console.log(`Express server listening on ${PORT}`);
 });
