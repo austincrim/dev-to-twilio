@@ -32,8 +32,8 @@ app.post("/sms", async (req, res) => {
     const twimlMessage = twimlResponse.message()
     // TODO add images
     twimlMessage.body(message);
-    twimlMessage.media(imageUrls[0]);
-
+    imageUrls.forEach(url => twimlMessage.media(url));
+    console.log(twimlResponse.toString());
     res.writeHead(200, { "Content-Type": "text/xml" });
     res.end(twimlResponse.toString());
 });
