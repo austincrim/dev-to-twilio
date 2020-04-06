@@ -20,6 +20,7 @@ app.post("/sms", async (req, res) => {
             return {url: r.sourceUrl, title: r.title, image: r.image}
         });
         imageUrls = recipeResponseData.image;
+        console.log(imageUrls);
         const responseStrings = recipeResponseData.map(r => `${r.title}\n${r.url}\n\n`);
         message = `Here are your recipes!\n\n${responseStrings.map(s => s).join('')}`; 
     } catch (error) {
@@ -31,7 +32,7 @@ app.post("/sms", async (req, res) => {
     const twimlMessage = twimlResponse.message()
     // TODO add images
     twimlMessage.body(message);
-    twimlMessage.media(imageUrls[0]);
+    // twimlMessage.media(imageUrls[0]);
 
     res.writeHead(200, { "Content-Type": "text/xml" });
     res.end(twimlResponse.toString());
