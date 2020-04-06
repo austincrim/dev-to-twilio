@@ -22,7 +22,7 @@ app.post("/sms", async (req, res) => {
         const responseStrings = recipeResponseData.map(r => `${r.title}\n${r.url}\n\n`);
         message = `Here are your recipes!\n\n${responseStrings.map(s => s).join('')}`; 
     } catch (error) {
-        console.error(error);
+        console.error(error.message);
         message = `Woops! Looks like we had some trouble with that request.\nEnsure that you send a list of ingredients separated by commas (e.g. carrots, rice, chicken).`
     }
     
