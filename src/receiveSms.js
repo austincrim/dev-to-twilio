@@ -18,7 +18,7 @@ app.post("/sms", async (req, res) => {
         const recipeDetails = await recipeClient.getRecipeDetailsByIds(recipeIds);
         recipeDetails.forEach(r => {
             const message = twimlResponse.message();
-            message.body(`\n${r.title}\n${r.url}`);
+            message.body(`\n${r.title}\n${r.sourceUrl}`);
             message.media(r.image); 
         });
     } catch (error) {
