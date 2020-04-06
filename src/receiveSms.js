@@ -17,6 +17,7 @@ app.post("/sms", async (req, res) => {
         const recipeIds = await recipeClient.getRecipeIdsByIngredients(ingredients);
         const recipeDetails = await recipeClient.getRecipeDetailsByIds(recipeIds);
         const recipeResponseData = recipeDetails.map(r => {
+            console.log(r.image);
             return {url: r.sourceUrl, title: r.title, image: r.image}
         });
         imageUrls = recipeResponseData.image;
