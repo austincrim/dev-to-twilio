@@ -19,7 +19,7 @@ app.post("/sms", async (req, res) => {
         const recipeResponseData = recipeDetails.map(r => {
             return {url: r.sourceUrl, title: r.title}
         });
-        const responseStrings = recipeResponseData.map(r => `Title: ${r.title}\nLink: ${r.url}\n\n`);
+        const responseStrings = recipeResponseData.map(r => `${r.title}\n${r.url}\n\n`);
         message = `Here are your recipes!\n\n${responseStrings.map(s => s).join('')}`; 
     } catch (error) {
         console.error(error);

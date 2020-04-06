@@ -8,7 +8,7 @@ const getRecipeIdsByIngredients = async ingredients => {
         const data = await response.json();
         return data.map(r => r.id);
     } else {
-        throw new Error(response);
+        throw new Error(response.json());
     }
 }
 
@@ -18,7 +18,7 @@ const getRecipeDetailsByIds = async recipeIds => {
         const data = await response.json();
         return data;
     } else {
-        throw new Error(response);
+        throw new Error(response.json());
     }
 }
 
