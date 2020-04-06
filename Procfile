@@ -1,1 +1,1 @@
-web: node src/receive_sms.js
+web: node src/receiveSms.js
