@@ -3,6 +3,7 @@ require('dotenv').config();
 
 const getRecipeIdsByIngredients = async (ingredients, offset) => {
     ingredients = ingredients.replace(/\s+/g, '');
+    console.info(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients}&number=3&offset=${offset}&apiKey=${process.env.API_KEY}`);
     const response = await fetch(
         `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients}&number=3&offset=${offset}&apiKey=${process.env.API_KEY}`
     );
@@ -18,9 +19,7 @@ const getRecipeIdsByIngredients = async (ingredients, offset) => {
 
 const getRecipeDetailsByIds = async (recipeIds) => {
     const response = await fetch(
-        `https://api.spoonacular.com/recipes/informationBulk?ids=${recipeIds.join()}&apiKey=${
-            process.env.API_KEY
-        }`
+        `https://api.spoonacular.com/recipes/informationBulk?ids=${recipeIds.join()}&apiKey=${process.env.API_KEY}`
     );
     if (response.ok) {
         const data = await response.json();
