@@ -12,25 +12,24 @@ app.post('/sms', async (req, res) => {
     const twimlResponse = new MessagingResponse();
     const inputMessage = req.body.Body;
     const inputArray = inputMessage.split(',');
-    let ingredients, numberToReturn = '3';
-    console.info(`inputMessage: ${inputMessage}`);
+    let ingredients,
+        numberToReturn = '3';
+    console.log(`inputMessage: ${inputMessage}`);
 
-    const lastElementPassed = inputArray.pop();
-    console.log(`last element passed: ${lastElementPassed}`);
-
-    if(!isNaN(lastElementPassed)) {
-        numberToReturn = lastElementPassed;
-        ingredients = inputArray.join();;
+    if (lastElementNumeric(inputArray)) {
+        numberToReturn = inputArray.pop();
+        ingredients = inputArray.join();
     } else {
         ingredients = inputMessage;
     }
 
-    console.log('ingredients', ingredients);
-    console.log('numberToReturn', numberToReturn);
+    console.log(`ingredients: ${ingredients}`);
+    console.log(`numberToReturn: ${numberToReturn}`);
 
     try {
         const recipeIds = await recipeClient.getRecipeIdsByIngredients(
-            ingredients, numberToReturn
+            ingredients,
+            numberToReturn
         );
         const recipeDetails = await recipeClient.getRecipeDetailsByIds(
             recipeIds
@@ -43,7 +42,9 @@ app.post('/sms', async (req, res) => {
     } catch (error) {
         console.error(error.message);
         const message = twimlResponse.message();
-        message.body(`Woops! Looks like we had some trouble with that request.\nEnsure that you send a list of ingredients separated by commas (e.g. carrots, rice, chicken).`);
+        message.body(
+            `Woops! Looks like we had some trouble with that request.\nEnsure that you send a list of ingredients separated by commas (e.g. carrots, rice, chicken).`
+        );
     }
 
     res.writeHead(200, { 'Content-Type': 'text/xml' });
@@ -53,3 +54,9 @@ app.post('/sms', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Express server listening on ${PORT}`);
 });
+
+function lastElementNumeric(array) {
+    const copyArray = [...array];
+    const lastElement = copyArray.pop();
+    return !isNaN(lastElement);
+}
