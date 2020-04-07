@@ -18,13 +18,13 @@ app.use(
 
 app.post('/sms', async (req, res) => {
     const twimlResponse = new MessagingResponse();
-    let ingredients, offset;
+    let ingredients, offset = 0;
 
     if (req.body.Body.toLowerCase() === 'next') {
         if (req.session.ingredients) {
             ingredients = req.session.ingredients;
-            offset = req.session.offset;
             req.session.offset += 3;
+            offset = req.session.offset;
         }
     } else {
         ingredients = req.body.Body;
