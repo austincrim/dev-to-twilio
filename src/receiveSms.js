@@ -15,9 +15,13 @@ app.post('/sms', async (req, res) => {
     let numberToReturn = 3;
 
     const lastElementPassed = ingredients.split(',').pop();
+    console.log(`last element passed: ${lastElementPassed}`);
+
     if(!isNaN(lastElementPassed)) {
         numberToReturn = lastElementPassed;
     }
+
+    console.log('numberToReturn', numberToReturn);
 
     try {
         const recipeIds = await recipeClient.getRecipeIdsByIngredients(
