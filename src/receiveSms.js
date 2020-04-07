@@ -18,26 +18,12 @@ app.use(
 
 app.post('/sms', async (req, res) => {
     const twimlResponse = new MessagingResponse();
-    let ingredients, offset = 0;
-
-    if (req.body.Body.toLowerCase() === 'next') {
-        if (req.session.ingredients) {
-            ingredients = req.session.ingredients;
-            req.session.offset += 3;
-            offset = req.session.offset;
-        }
-    } else {
-        ingredients = req.body.Body;
-        req.session.ingredients = req.body.Body;
-        req.session.offset = 0;
-    }
+    const ingredients = req.body.Body;
     console.info(`Ingredients: ${ingredients}`);
-    console.info(`Offset: ${offset}`);
 
     try {
         const recipeIds = await recipeClient.getRecipeIdsByIngredients(
-            ingredients,
-            offset
+            ingredients
         );
         const recipeDetails = await recipeClient.getRecipeDetailsByIds(
             recipeIds

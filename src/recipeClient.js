@@ -1,11 +1,10 @@
 const fetch = require('isomorphic-unfetch');
 require('dotenv').config();
 
-const getRecipeIdsByIngredients = async (ingredients, offset) => {
+const getRecipeIdsByIngredients = async (ingredients) => {
     ingredients = ingredients.replace(/\s+/g, '');
-    console.info(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients}&number=3&offset=${offset}&apiKey=${process.env.API_KEY}`);
     const response = await fetch(
-        `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients}&number=3&offset=${offset}&apiKey=${process.env.API_KEY}`
+        `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients}&number=3&apiKey=${process.env.API_KEY}`
     );
     if (response.ok) {
         const data = await response.json();
