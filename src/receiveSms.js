@@ -12,7 +12,7 @@ app.post('/sms', async (req, res) => {
     const twimlResponse = new MessagingResponse();
     const inputMessage = req.body.Body;
     const inputArray = inputMessage.split(',');
-    let ingredients, numberToReturn = 3;
+    let ingredients, numberToReturn = '3';
     console.info(`inputMessage: ${inputMessage}`);
 
     const lastElementPassed = inputArray.pop();
