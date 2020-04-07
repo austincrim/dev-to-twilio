@@ -28,6 +28,7 @@ app.post('/sms', async (req, res) => {
         }
     } else {
         ingredients = req.body.Body;
+        req.session.ingredients = req.body.Body;
     }
     console.info(`Ingredients: ${ingredients}`);
 
