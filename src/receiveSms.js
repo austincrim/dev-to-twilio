@@ -10,17 +10,22 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post('/sms', async (req, res) => {
     const twimlResponse = new MessagingResponse();
-    const ingredients = req.body.Body;
-    console.info(`Ingredients: ${ingredients}`);
-    let numberToReturn = 3;
+    const inputMessage = req.body.Body;
+    const inputArray = inputMessage.split(',');
+    let ingredients, numberToReturn = 3;
+    console.info(`inputMessage: ${inputMessage}`);
 
-    const lastElementPassed = ingredients.split(',').pop();
+    const lastElementPassed = inputArray.pop();
     console.log(`last element passed: ${lastElementPassed}`);
 
     if(!isNaN(lastElementPassed)) {
         numberToReturn = lastElementPassed;
+        ingredients = inputArray.join();;
+    } else {
+        ingredients = inputMessage;
     }
 
+    console.log('ingredients', ingredients);
     console.log('numberToReturn', numberToReturn);
 
     try {
@@ -37,7 +42,8 @@ app.post('/sms', async (req, res) => {
         });
     } catch (error) {
         console.error(error.message);
-        message = `Woops! Looks like we had some trouble with that request.\nEnsure that you send a list of ingredients separated by commas (e.g. carrots, rice, chicken).`;
+        const message = twimlResponse.message();
+        message.body(`Woops! Looks like we had some trouble with that request.\nEnsure that you send a list of ingredients separated by commas (e.g. carrots, rice, chicken).`);
     }
 
     res.writeHead(200, { 'Content-Type': 'text/xml' });
